@@ -1,3 +1,10 @@
+// PON ESTO AL PRINCIPIO DE TODO EN server.js
+process.on('uncaughtException', (err) => {
+    console.error('¡CRASH DETECTADO!: ', err.message);
+});
+
+const express = require('express');
+// ... resto de tu código ...
 const express = require('express');
 const mysql = require('mysql2');
 const nodemailer = require('nodemailer');
