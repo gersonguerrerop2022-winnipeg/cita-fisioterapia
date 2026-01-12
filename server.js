@@ -5,9 +5,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Conexión con valores directos (Hardcoded) para asegurar el éxito
 const db = mysql.createPool({
-    host: 'localhost', 
-    user: 'u120456799_u123456789_cit', // Cambié _adm por _cit según tus logs
-    password: 'u123456789Pass',       // Tu contraseña real
+    host: '127.0.0.1', // Cambiamos localhost por esta IP exacta
+    user: 'u120456799_u123456789_cit', 
+    password: 'u123456789Pass', // ASEGÚRATE de que esta sea la clave exacta que pusiste en el panel
     database: 'u120456799_u123456789_cit',
     connectTimeout: 10000
 });
