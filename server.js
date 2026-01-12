@@ -7,7 +7,7 @@ app.use(express.urlencoded({ extended: true }));
 const db = mysql.createPool({
     host: '127.0.0.1', 
     user: 'u120456799_user', // Tu usuario de la imagen da92dd
-    password: 'TU_CONTRASEÑA_AQUÍ', // Escribe aquí la clave que creaste en el panel
+    password: 'Fisonia2026', // Escribe aquí la clave que creaste en el panel
     database: 'u120456799_fisonia',
     connectTimeout: 10000
 });
