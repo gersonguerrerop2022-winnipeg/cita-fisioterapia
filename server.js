@@ -13,14 +13,14 @@ const db = mysql.createPool({
     connectTimeout: 10000
 });
 
-// 2. CONFIGURACIÓN DE CORREO (SMTP de Hostinger)
+// CONFIGURACIÓN DE CORREO REAL
 const transporter = nodemailer.createTransport({
     host: 'smtp.hostinger.com',
     port: 465,
-    secure: true, 
+    secure: true, // Obligatorio para el puerto 465
     auth: {
-        user: 'tu-correo@tu-dominio.com', // El que crees en el panel de Hostinger
-        pass: 'tu-contraseña-de-email'   // La contraseña de ese correo
+        user: 'citas@fisio.guerrerogroup.net', // La cuenta que acabas de crear
+        pass: 'Fisonia2026@!' // La contraseña que pusiste en el Paso 1
     }
 });
 
