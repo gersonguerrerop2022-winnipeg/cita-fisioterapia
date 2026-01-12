@@ -31,9 +31,9 @@ app.post('/enviar', (req, res) => {
     // Intentamos la inserción
     db.execute('INSERT INTO pacientes (nombre, telefono) VALUES (?, ?)', [nombre, telefono], (err) => {
         if (err) {
-            console.error("Error de DB:", err.message);
-            return res.status(500).send("No pudimos guardar los datos, intenta de nuevo.");
-        }
+    // Esto imprimirá el error real en tu pantalla para que lo leas
+    return res.status(500).send("DETALLE DEL ERROR: " + err.code + " - " + err.message);
+}
         res.send("¡Gracias! Datos guardados correctamente.");
     });
 });
