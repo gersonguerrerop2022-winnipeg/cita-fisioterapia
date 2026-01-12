@@ -8,7 +8,7 @@ app.use(express.urlencoded({ extended: true }));
 const db = mysql.createPool({
     host: '127.0.0.1', 
     user: 'u120456799_user', 
-    password: 'TU_CONTRASEÑA_DE_DB', 
+    password: 'Fisonia2026', 
     database: 'u120456799_fisonia',
     waitForConnections: true,
     connectionLimit: 10
@@ -22,8 +22,8 @@ try {
         port: 465,
         secure: true, 
         auth: {
-            user: 'reservas@guerrerogroup.net', // La que creaste en el panel
-            pass: 'TU_CONTRASEÑA_DEL_CORREO'   // La que anotaste al crearla
+            user: 'citas@fisio.guerrerogroup.net', // La que creaste en el panel
+            pass: 'Fisonia2026@!'   // La que anotaste al crearla
         }
     });
 } catch (e) {
