@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 const db = mysql.createPool({
     host: '127.0.0.1', 
     user: 'u120456799_user', 
-    password: 'TU_CONTRASEÑA_DE_BASE_DE_DATOS', 
+    password: 'Fisonia2026', 
     database: 'u120456799_fisonia',
     waitForConnections: true,
     connectionLimit: 10
@@ -22,7 +22,7 @@ const transporter = nodemailer.createTransport({
     secure: true, 
     auth: {
         user: 'citas@fisio.guerrerogroup.net',
-        pass: 'TU_CONTRASEÑA_DEL_CORREO_CITAS' // La que creaste para esta cuenta
+        pass: 'Fisonia2026@!' // La que creaste para esta cuenta
     }
 });
 
