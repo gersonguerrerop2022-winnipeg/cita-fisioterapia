@@ -3,13 +3,13 @@ const mysql = require('mysql2');
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 
-// Creamos el "pool" pero no forzamos la conexión inmediata para no tirar el servidor
+// Forzamos la lectura de variables y añadimos valores por defecto para pruebas
 const db = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    connectTimeout: 5000 // Si en 5 segundos no conecta, que dé error pero no mate la app
+    host: process.env.DB_HOST || 'localhost', 
+    user: process.env.DB_USER || 'u120456799_u123456789_cit', // Pon aquí el usuario de tu imagen d8676e
+    password: process.env.DB_PASSWORD || 'u123456789Pass',     // Pon aquí tu contraseña real
+    database: process.env.DB_NAME || 'u120456799_u123456789_cit',
+    connectTimeout: 10000
 });
 
 // ESTO ASEGURA QUE EL FORMULARIO CARGUE SIEMPRE (Ruta GET)
