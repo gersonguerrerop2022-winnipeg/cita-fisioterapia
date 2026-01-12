@@ -1,45 +1,42 @@
 const express = require('express');
-const axios = require('axios');
-const mysql = require('mysql2'); // Añadimos esto
+const mysql = require('mysql2');
 const app = express();
-
 app.use(express.urlencoded({ extended: true }));
 
-// Configuración de la Base de Datos usando Variables de Entorno
+// Creamos el "pool" pero no forzamos la conexión inmediata para no tirar el servidor
 const db = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    database: process.env.DB_NAME,
+    connectTimeout: 5000 // Si en 5 segundos no conecta, que dé error pero no mate la app
 });
 
+// ESTO ASEGURA QUE EL FORMULARIO CARGUE SIEMPRE (Ruta GET)
 app.get('/', (req, res) => {
-    res.send('<h1>Reserva Fisioterapia</h1><form action="/enviar" method="POST"><input name="nombre" placeholder="Nombre"><input name="telefono" placeholder="WhatsApp"><button>Reservar</button></form>');
+    res.send(`
+        <h1>Reserva Fisioterapia</h1>
+        <form action="/enviar" method="POST">
+            <input name="nombre" placeholder="Nombre" required><br><br>
+            <input name="telefono" placeholder="WhatsApp" required><br><br>
+            <button type="submit">Reservar</button>
+        </form>
+    `);
 });
 
-app.post('/enviar', async (req, res) => {
+// Ruta de procesamiento (POST)
+app.post('/enviar', (req, res) => {
     const { nombre, telefono } = req.body;
-
-    // 1. Guardar en Base de Datos (Seguridad primero)
-    const sql = 'INSERT INTO pacientes (nombre, telefono) VALUES (?, ?)';
-    db.execute(sql, [nombre, telefono], async (err) => {
-        if (err) return res.send("Error al guardar en base de datos.");
-
-        // 2. Intentar enviar WhatsApp
-        try {
-            await axios.post(`https://graph.facebook.com/v18.0/${process.env.WA_PHONE_ID}/messages`, {
-                messaging_product: "whatsapp",
-                to: telefono,
-                type: "template",
-                template: { name: "hello_world", language: { code: "en_US" } }
-            }, {
-                headers: { 'Authorization': `Bearer ${process.env.WA_TOKEN}` }
-            });
-            res.send("Datos guardados y WhatsApp enviado.");
-        } catch (error) {
-            res.send("Datos guardados en sistema, pero hubo un error enviando el WhatsApp.");
+    
+    // Intentamos la inserción
+    db.execute('INSERT INTO pacientes (nombre, telefono) VALUES (?, ?)', [nombre, telefono], (err) => {
+        if (err) {
+            console.error("Error de DB:", err.message);
+            return res.status(500).send("No pudimos guardar los datos, intenta de nuevo.");
         }
+        res.send("¡Gracias! Datos guardados correctamente.");
     });
 });
 
-app.listen(process.env.PORT || 3000);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("Servidor activo en puerto " + PORT));
